@@ -1,4 +1,5 @@
 import React from 'react';
+import kmeans from 'ml-kmeans';
 import * as constants from '../constants'
 
 class Songs extends React.Component {
@@ -7,33 +8,47 @@ class Songs extends React.Component {
         this.state = {
             info: null,
             song: {},
-            image: null
+            image: {}
         };
 
         this.getTrackInfo = this.getTrackInfo.bind(this);
         this.getBase64FromImageUrl = this.getBase64FromImageUrl.bind(this);
+        this.generateColorPalette = this.generateColorPalette.bind(this);
     }
 
     getBase64FromImageUrl(url) {
         if (url === "") {
-            return this.setState({ image: "" })
+            return this.setState({
+                image: {
+                    image: "",
+                    url: "",
+                    data: ""
+                }
+            })
         }
 
-        var img = new Image();
+        let img = new Image();
 
         img.setAttribute('crossOrigin', 'anonymous');
 
         let that = this;
         img.onload = function () {
-            var canvas = document.createElement("canvas");
+            let canvas = document.createElement("canvas");
             canvas.width = this.width;
             canvas.height = this.height;
 
-            var ctx = canvas.getContext("2d");
+            let ctx = canvas.getContext("2d");
             ctx.drawImage(this, 0, 0);
+            let imageData = ctx.getImageData(0, 0, this.width, this.height).data;
 
-            var dataURL = canvas.toDataURL("image/png");
-            that.setState({ image: dataURL })
+            let dataURL = canvas.toDataURL("image/png");
+            that.setState({
+                image: {
+                    image: dataURL,
+                    url: url,
+                    data: imageData
+                }
+            }, _ => that.generateColorPalette());
         };
 
         img.src = url;
@@ -61,7 +76,13 @@ class Songs extends React.Component {
                     if (track.track.album) {
                         this.getBase64FromImageUrl(this.getAlbumImage(this.state.info.album, 3))
                     } else {
-                        this.setState({ image: "" })
+                        this.setState({
+                            image: {
+                                image: "",
+                                url: "",
+                                data: ""
+                            }
+                        })
                     }
                 }
             });
@@ -77,6 +98,25 @@ class Songs extends React.Component {
         } else {
             return this.getAlbumImage(album, index - 1);
         }
+    }
+
+    generateColorPalette() {
+        let imageData = this.state.image.data;
+        let pixels = [];
+        for (var i = 0; i < imageData.length; i += 4) {
+            pixels.push([imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3]]);
+        }
+
+        let ans = kmeans(pixels, 10);
+
+        let centroids = ans.centroids;
+        console.log(centroids);
+        let palette = centroids.map(centroid => {
+            return centroid.centroid.map(value => Math.round(value));
+        });
+        console.log(centroids);
+
+        this.props.update(palette);
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -102,11 +142,9 @@ class Songs extends React.Component {
     render() {
         if (this.state.info) {
             return (
-                <div className="app">
-                    <div className="top">
-                        <div className="content">
-                        </div>
-                        <img id="album-art" src={this.state.image} />
+                <div id="phone" className="app">
+                    <div className="top" style={{ 'backgroundImage': 'url("' + this.state.image.url + '")' }}>
+                        <div className="content"></div>
                     </div>
                     <div className="bottom">
                         {this.props.song.name}

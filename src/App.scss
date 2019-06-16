@@ -26,37 +26,27 @@
   width: 35vh;
   background-color: white;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-
-  .top, .bottom {
-      height: 50%;
-  }
+  display: flex;
+  flex-direction: column;
 
   .top {
       position: relative;
+      background-repeat: no-repeat;
+      background-size: contain;
+      padding-bottom: 100.2%;
 
       .content {
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          top: 0;
-          left: 0;
-          z-index: 1;
       }
+  }
 
-      #album-art {
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          left: 0;
-          top: 0;
-          z-index: 0;
-      }
+  .bottom {
+    flex: 1;
   }
 }
 
 .songs {
   height: 70vh;
-  width: 33vw;
+  width: 30vw;
 
   input {
     background-color: #444;
@@ -102,12 +92,25 @@
   }
 }
 
-
-#colors, #results {
+.swatches {
+  width: 30vw;
   display: flex;
+  flex-wrap: wrap;
+
+  .color {
+    height: 100px;
+    width: 100px;
+  }
 }
 
-.color {
-  height: 50px;
-  width: 50px;
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  .App {
+    display: block;
+
+    .songs, .app, .place {
+      height: 100vh;
+      width: 100vw;
+    }
+  }
 }

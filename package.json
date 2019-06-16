@@ -4,11 +4,15 @@
   "private": true,
   "dependencies": {
     "gh-pages": "^2.0.1",
+    "lodash": "^4.17.11",
+    "ml-kmeans": "^4.2.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-scroll-to-component": "^1.0.2",
+    "react-scrollable-anchor": "^0.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

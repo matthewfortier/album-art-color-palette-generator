@@ -1,5 +1,8 @@
 import React from 'react';
+import { goToAnchor } from 'react-scrollable-anchor'
 import * as constants from '../constants';
+
+import _ from 'lodash';
 
 class Songs extends React.Component {
     constructor(props) {
@@ -9,10 +12,17 @@ class Songs extends React.Component {
             searchkey: "",
             songs: []
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.deboucnedChange = _.debounce(this.deboucnedChange.bind(this), 200);
     }
 
     handleChange(e) {
         this.setState({ searchkey: e.target.value });
+        this.deboucnedChange()
+    }
+
+    deboucnedChange() {
         this.searchSongs();
     }
 
@@ -20,6 +30,7 @@ class Songs extends React.Component {
         let song = this.state.songs[track];
         this.setState({ song: song });
         this.props.update(song);
+        goToAnchor('phone');
     }
 
     searchSongs() {
@@ -61,7 +72,7 @@ class Songs extends React.Component {
 
         return (
             <div className="songs">
-                <input type="text" placeholder="search..." value={this.state.searchkey} onChange={this.handleChange.bind(this)} />
+                <input type="text" placeholder="search..." value={this.state.searchkey} onChange={this.handleChange} />
                 <ul className="tracks">
                     {tracks}
                 </ul>
