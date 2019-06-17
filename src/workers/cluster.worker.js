@@ -10,7 +10,7 @@ function runCluster(event) {
         pixels.push([imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3]]);
     }
 
-    let ans = kmeans(pixels, 10);
+    let ans = kmeans(pixels, 20);
 
     let centroids = ans.centroids;
     console.log(centroids);

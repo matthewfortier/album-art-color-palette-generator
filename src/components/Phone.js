@@ -1,20 +1,16 @@
 import React from 'react';
 import ClusterWorker from '../workers/cluster.worker';
 
-import * as constants from '../constants'
-
 class Songs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: null,
             song: {},
             image: {}
         };
 
         this.worker = null;
 
-        this.getTrackInfo = this.getTrackInfo.bind(this);
         this.getBase64FromImageUrl = this.getBase64FromImageUrl.bind(this);
         this.generateColorPalette = this.generateColorPalette.bind(this);
     }
@@ -58,48 +54,16 @@ class Songs extends React.Component {
         return url;
     }
 
-    getTrackInfo() {
-        let params = {
-            "method": "track.getInfo",
-            "api_key": process.env.REACT_APP_API_KEY,
-            "artist": encodeURIComponent(this.props.song.artist),
-            "track": encodeURIComponent(this.props.song.name),
-            "format": "json",
-        }
-
-        let queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        console.log(constants.LAST_FM_API + queryString);
-
-        fetch(constants.LAST_FM_API + queryString)
-            .then(response => response.json())
-            .then(track => {
-                if (track) {
-                    console.log(track);
-                    this.setState({ info: track.track })
-                    if (track.track.album) {
-                        this.getBase64FromImageUrl(this.getAlbumImage(this.state.info.album, 3))
-                    } else {
-                        this.setState({
-                            image: {
-                                image: "",
-                                url: "",
-                                data: ""
-                            }
-                        })
-                    }
-                }
-            });
-    }
-
     getAlbumImage(album, index) {
-        if (index < 0) {
+        if (index > 2) {
             return "";
         }
 
-        if (album.image[index]["#text"]) {
-            return album.image[index]["#text"];
+        console.log(album);
+        if (album.images[index]["url"]) {
+            return album.images[index]["url"];
         } else {
-            return this.getAlbumImage(album, index - 1);
+            return this.getAlbumImage(album, index + 1);
         }
     }
 
@@ -129,19 +93,23 @@ class Songs extends React.Component {
             if (this.props.song.image) {
 
             }
-            this.getTrackInfo();
+            // this.getTrackInfo();
+            // this.getBase64FromImageUrl(this.getAlbumImage(this.props.song.album, 0));
+            this.getBase64FromImageUrl(this.props.song.album.images[2]["url"]);
         }
     }
 
     render() {
-        if (this.state.info) {
+        if (this.state.image.url) {
             return (
                 <div id="phone" className="app">
-                    <div className="top" style={{ 'backgroundImage': 'url("' + this.state.image.url + '")' }}>
-                        <div className="content"></div>
-                    </div>
-                    <div className="bottom">
-                        {this.props.song.name}
+                    <div className="phone">
+                        <div className="top" style={{ 'backgroundImage': 'url("' + this.props.song.album.images[0]["url"] + '")' }}>
+                            <div className="content"></div>
+                        </div>
+                        <div className="bottom">
+                            {this.props.song.name}
+                        </div>
                     </div>
                 </div>
             );

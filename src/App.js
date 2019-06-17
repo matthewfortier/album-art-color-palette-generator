@@ -2,7 +2,8 @@ import React from 'react';
 //import logo from './logo.svg';
 import Songs from './components/Songs';
 import Phone from './components/Phone';
-import Swatches from './components/Swatches'
+import Swatches from './components/Swatches';
+import Login from './components/Login';
 
 import ScrollableAnchor from 'react-scrollable-anchor'
 import './App.scss';
@@ -13,7 +14,8 @@ class App extends React.Component {
     this.state = {
       song: {},
       palette: [],
-      counter: 0
+      accessToken: new URLSearchParams(window.location.hash.substring(1)).get('access_token'),
+      clientID: process.env.REACT_APP_CLIENT_ID
     }
 
     this.updateSong = this.updateSong.bind(this);
@@ -31,22 +33,26 @@ class App extends React.Component {
       console.log(palette);
     });
   }
-
   componentDidMount() {
     console.log(this.refs);
   }
 
   render() {
+    if (this.state.accessToken === null) {
+      return (
+          <Login clientID={this.state.clientID} />
+      )
+    }
+
     return (
       <div className="App">
-        <Songs update={this.updateSong} />
+        <Songs update={this.updateSong} clientID={this.state.clientID} accessToken={this.state.accessToken} />
         <ScrollableAnchor id={'phone'}>
           <Phone song={this.state.song} update={this.updatePalette} />
         </ScrollableAnchor>
         <div className="right">
           <Swatches palette={this.state.palette} />
         </div>
-        <span>{this.state.counter}</span>
       </div>
     );
   }
