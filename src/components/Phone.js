@@ -1,5 +1,6 @@
 import React from 'react';
-import kmeans from 'ml-kmeans';
+import ClusterWorker from '../workers/cluster.worker';
+
 import * as constants from '../constants'
 
 class Songs extends React.Component {
@@ -10,6 +11,8 @@ class Songs extends React.Component {
             song: {},
             image: {}
         };
+
+        this.worker = null;
 
         this.getTrackInfo = this.getTrackInfo.bind(this);
         this.getBase64FromImageUrl = this.getBase64FromImageUrl.bind(this);
@@ -102,21 +105,7 @@ class Songs extends React.Component {
 
     generateColorPalette() {
         let imageData = this.state.image.data;
-        let pixels = [];
-        for (var i = 0; i < imageData.length; i += 4) {
-            pixels.push([imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3]]);
-        }
-
-        let ans = kmeans(pixels, 10);
-
-        let centroids = ans.centroids;
-        console.log(centroids);
-        let palette = centroids.map(centroid => {
-            return centroid.centroid.map(value => Math.round(value));
-        });
-        console.log(centroids);
-
-        this.props.update(palette);
+        this.worker.postMessage(imageData);
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -128,6 +117,11 @@ class Songs extends React.Component {
 
         // Return null if the state hasn't changed
         return null;
+    }
+
+    componentDidMount() {
+        this.worker = new ClusterWorker();
+        this.worker.addEventListener('message', event => this.props.update(event.data));
     }
 
     componentDidUpdate(prevProps, prevState) {

@@ -12,7 +12,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       song: {},
-      palette: []
+      palette: [],
+      counter: 0
     }
 
     this.updateSong = this.updateSong.bind(this);
@@ -45,6 +46,7 @@ class App extends React.Component {
         <div className="right">
           <Swatches palette={this.state.palette} />
         </div>
+        <span>{this.state.counter}</span>
       </div>
     );
   }
