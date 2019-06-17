@@ -1,9 +1,9 @@
 import kmeans from 'ml-kmeans';
 
-self.addEventListener("message", runCluster);
+self.addEventListener("message", runCluster); // eslint-disable-line no-restricted-globals
 
 function runCluster(event) {
-    console.log(event.data, self)
+    console.log(event.data, self) // eslint-disable-line no-restricted-globals
     let imageData = event.data;
     let pixels = [];
     for (var i = 0; i < imageData.length; i += 4) {
