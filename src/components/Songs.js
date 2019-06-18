@@ -13,7 +13,8 @@ class Songs extends React.Component {
         this.state = {
             song: {},
             searchkey: "",
-            songs: []
+            songs: [],
+            searching: false
         };
 
         console.log(window.location);
@@ -23,25 +24,53 @@ class Songs extends React.Component {
 
         this.prev = null;
 
+        this.handleFocus = this.handleFocus.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.deboucnedChange = _.debounce(this.deboucnedChange.bind(this), 200);
     }
 
     handleChange(e) {
         this.setState({ searchkey: e.target.value });
-        this.deboucnedChange()
+        if (e.target.value !== '') {
+            this.deboucnedChange()
+        } else {
+            this.setState({ songs: [], searching: false })
+        }
     }
 
     deboucnedChange() {
         this.searchSongs();
+        this.setState({ searching: true });
+    }
+
+    handleFocus() {
+        if (this.state.searchkey !== '') {
+            this.setState({ searching: true })
+        }
     }
 
     handleClick(track) {
         let song = this.state.songs[track];
         console.log(song);
-        this.setState({ song: song });
+        this.setState({ song: song, searching: false });
         this.props.update(song);
         goToAnchor('phone');
+    }
+
+    handleKeyUp(e) {
+        console.log(e.keyCode);
+        switch (e.keyCode) {
+            case 13:
+                this.setState({ searching: true });
+                this.searchSongs();
+                break;
+            case 27:
+                this.setState({ searching: false });
+                break;
+            default:
+                break;
+        }
     }
 
     searchSongs() {
@@ -70,7 +99,7 @@ class Songs extends React.Component {
             this.prev.abort();
         }
 
-        this.prev = this.spotify.searchTracks(this.state.searchkey, {limit: 10})
+        this.prev = this.spotify.searchTracks(this.state.searchkey, { limit: 10 })
         this.prev.then(data => {
             this.prev = null;
             console.log(data);
@@ -81,21 +110,24 @@ class Songs extends React.Component {
     render() {
         return (
             <div className="songs">
-                <input type="text" placeholder="search..." value={this.state.searchkey} onChange={this.handleChange} />
-                {/* <ul className="tracks">
-                    {tracks}
-                </ul> */}
-                <SimpleBar className="tracks" style={{ height: '100%'}}>
-                    {this.state.songs.map((value, index) =>
-                        <div className="track" key={index} onClick={this.handleClick.bind(this, index)}>
-                            <div className="track-album-image" style={{ 'backgroundImage': 'url("' + value.album.images[2]["url"] + '")' }}></div>
-                            <div className="track-info">
-                                <span className="track-name">{value.name}</span>
-                                <p className="track-artist">{value.artists[0].name} - {value.album.name}</p>
+                <div className="search-bar">
+                    <img id="mag-glass" src="https://img.icons8.com/ios/50/000000/search.png" alt="Search Icon" />
+                    <input type="text" placeholder="Search..." value={this.state.searchkey} onFocus={this.handleFocus} onKeyUp={this.handleKeyUp} onChange={this.handleChange} />
+                </div>
+                <div className="results">
+                    <SimpleBar className="tracks" style={{ height: (this.state.searching) ? '400px' : '0px' }}>
+                        {this.state.songs.map((value, index) =>
+                            <div className="track" key={index} onClick={this.handleClick.bind(this, index)}>
+                                <div className="track-album-image" style={{ 'backgroundImage': 'url("' + value.album.images[2]["url"] + '")' }}></div>
+                                <div className="track-info">
+                                    <span className="track-name">{value.name}</span>
+                                    <p className="track-artist">{value.artists[0].name} - {value.album.name}</p>
+                                </div>
                             </div>
-                        </div>
-                    )}
-                </SimpleBar>
+                        )}
+                    </SimpleBar>
+                </div>
+
             </div>
         );
     }

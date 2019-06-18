@@ -40,18 +40,22 @@ class App extends React.Component {
   render() {
     if (this.state.accessToken === null) {
       return (
-          <Login clientID={this.state.clientID} />
+        <Login clientID={this.state.clientID} />
       )
     }
 
     return (
       <div className="App">
-        <Songs update={this.updateSong} clientID={this.state.clientID} accessToken={this.state.accessToken} />
-        <ScrollableAnchor id={'phone'}>
-          <Phone song={this.state.song} update={this.updatePalette} />
-        </ScrollableAnchor>
-        <div className="right">
-          <Swatches palette={this.state.palette} />
+        <div id="search">
+          <Songs update={this.updateSong} clientID={this.state.clientID} accessToken={this.state.accessToken} />
+        </div>
+        <div id="main-content">
+          <div className="right">
+            <Swatches palette={this.state.palette} />
+          </div>
+          <ScrollableAnchor id={'phone'}>
+            <Phone song={this.state.song} update={this.updatePalette} />
+          </ScrollableAnchor>
         </div>
       </div>
     );

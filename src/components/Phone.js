@@ -1,18 +1,26 @@
 import React from 'react';
+import { OverflowDetector } from 'react-overflow';
+import Marquee from '../components/Marquee';
 import ClusterWorker from '../workers/cluster.worker';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons'
+
 
 class Songs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             song: {},
-            image: {}
+            image: {},
+            marquee: false,
         };
 
         this.worker = null;
 
         this.getBase64FromImageUrl = this.getBase64FromImageUrl.bind(this);
         this.generateColorPalette = this.generateColorPalette.bind(this);
+        this.handleOverflowChange = this.handleOverflowChange.bind(this);
     }
 
     getBase64FromImageUrl(url) {
@@ -83,6 +91,11 @@ class Songs extends React.Component {
         return null;
     }
 
+    handleOverflowChange() {
+        console.log("Overflowing");
+        this.setState({ marquee: true });
+    }
+
     componentDidMount() {
         this.worker = new ClusterWorker();
         this.worker.addEventListener('message', event => this.props.update(event.data));
@@ -102,16 +115,40 @@ class Songs extends React.Component {
     render() {
         if (this.state.image.url) {
             return (
-                <div id="phone" className="app">
-                    <div className="phone">
-                        <div className="top" style={{ 'backgroundImage': 'url("' + this.props.song.album.images[0]["url"] + '")' }}>
-                            <div className="content"></div>
-                        </div>
-                        <div className="bottom">
-                            {this.props.song.name}
+                <div className="mockup-container">
+                    <div id="phone" className="mockup">
+                        <div className="phone">
+                            <div className="top" /* style={{ 'backgroundImage': 'url("' + this.props.song.album.images[0]["url"] + '")' }} */>
+                                <img src={this.props.song.album.images[0]["url"]} alt="" />
+                                {/* <div className="content"></div> */}
+                            </div>
+                            <div className="bottom">
+                                <div className="text">
+                                    <OverflowDetector
+                                        onOverflowChange={this.handleOverflowChange}
+                                        style={{ width: '75%', margin: '0 auto' }}
+                                    >
+                                        <span className="marquee" style={{ display: (this.state.marquee) ? "none" : "initial" }}>{this.props.song.name}</span>
+                                        <marquee className="marquee" style={{ height: (this.state.marquee) ? "initial" : "0px" }}>{this.props.song.name}</marquee>
+                                    </OverflowDetector>
+
+                                    <span className="artists">{this.props.song.artists.reduce((acc, val, i) => {
+                                        let artists = acc + val.name;
+                                        if (i !== this.props.song.artists.length - 1) {
+                                            artists += ', '
+                                        }
+                                        return artists
+                                    }, '')}</span>
+                                </div>
+                                <div className="controls">
+                                    <FontAwesomeIcon icon={faStepBackward} />
+                                    <FontAwesomeIcon icon={faPlay} />
+                                    <FontAwesomeIcon icon={faStepForward} />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div >
             );
         } else {
             return (

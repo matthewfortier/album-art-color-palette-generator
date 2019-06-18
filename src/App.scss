@@ -1,16 +1,32 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap');
 
+@font-face {
+  font-family: "Calibre";
+  src: url("./assets/fonts/calibre-regular.ttf") format("truetype"),
+}
+
+@font-face {
+  font-family: "Calibre SemiBold";
+  src: url("./assets/fonts/calibre-semibold.ttf") format("truetype"),
+}
+
+@font-face {
+  font-family: "Cirular";
+  src: url("./assets/fonts/circular-medium.ttf") format("truetype"),
+}
+
 .html, body {
   margin: 0;
   padding: 0;
-  background-color: #333;
+  background-color: #292a2e;
+  // background-image: linear-gradient(to bottom right, #222, #111);
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: 'Circular', sans-serif;
 }
 
 .Login {
@@ -29,6 +45,7 @@
     border-radius: 20px;
     text-transform: uppercase;
     font-weight: bold;
+    cursor: pointer;
 
     &:hover, &:active {
       background-color: lighten(#1DB954, 10);
@@ -40,109 +57,208 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: column;
 }
 
-.songs {
-  flex: 1;
-  margin: 10px;
-} 
+#main-content {
+  width: 100%;
+  // max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 
 .right {
-  width: 35vw;
-  margin: 10px;
+  width: 40%;
 }
 
-.app {
-  height: 70vh;
-  width: 35vh;
+.mockup-container {
+  height: 92vh;
+  width: 45%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #404040;
+  border-left: 1px solid #1e2022;
 
-  .phone {
-    height: 70%;
-    width: 70%;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  .mockup {
+    height: 70vh;
+    width: 35vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    border-radius: 48px;
+    padding: 60px 8px;
+    position: relative;
 
-    .top {
-      position: relative;
-      background-repeat: no-repeat;
-      background-size: contain;
-      padding-bottom: 100.2%;
+    &:before {
+      content: '';
+      position: absolute;
+      margin-left: -80px;
+      top: 22px;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      background-color: #333;
     }
 
-    .bottom {
-      flex: 1;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 25px;
+      height: 5px;
+      width: 80px;
+      border-radius: 60px;
+      background-color: #333;
     }
-  }
-
   
+    .phone {
+      height: 100%;
+      width: 100%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      border-radius: 48px;
+      display: flex;
+      flex-direction: column;
+  
+      .top {
+        position: relative;
+
+        img {
+          width: 100%;
+        }
+      }
+  
+      .bottom {
+        flex: 1;
+        background-color: #333;
+
+        .controls {
+          display: flex;
+          justify-content: space-around;
+          font-size: 2rem;
+          margin: 60px 0;
+          color: white;
+        }
+
+        .text {
+          display: flex;
+          flex-direction: column;
+          margin: 20px 0;
+          text-align: center;
+
+          .artists {
+            // margin-top: -16px;
+          }
+
+          .marquee {
+            font-size: 1.5rem;
+            margin: 0 auto;
+            color: white;
+            white-space: nowrap;
+          }
+
+          span {
+            text-align: center;
+            color: rgba(255,255,255,.7);
+          }
+        }
+      }
+    }
+  
+    
+  }
 }
 
-.songs {
-  display: flex;
-  flex-direction: column;
-  height: 70vh;
+#search {
+  height: 8vh;
 
-  input {
-    background-color: #444;
-    border: none;
-    height: 32px;
+  .songs {
     width: 100%;
-    padding: 0px;
-    outline: none;
-    color: #ddd;
-    font-size: 1rem;
-    border-radius: 3px;
-    text-indent: 10px;
-  }
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #111;
 
-  .tracks {
-    flex: 1;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    border-radius: 3px;
-    margin-top: 5px;
-    overflow: auto;
-
-    .track {
+    .search-bar {
+      height: 100%;
+      width: 100%;
+      // max-width: 1024px;
       display: flex;
-      margin-top: 5px;
-      line-height: 32px;
-      font-size: 1rem;
-      color: #ddd;
-      cursor: pointer;
-      background-color: #444;
-      border-radius: 3px;
+      align-items: center;
 
-      &:hover {
-        background-color: #333;
-      }
-
-      &-album-image {
-        min-width: 64px;
-        background-repeat: no-repeat;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-      }
-
-      &-info {
-        padding-left: 10px;
+      input {
+        background-color: transparent;
+        border: none;
         height: 100%;
+        flex: 1;
+        padding: 0px;
+        outline: none;
+        color: #ddd;
+        font-size: 2rem;
+        border-radius: 3px;
       }
 
-      &-artist {
-        display: flex;
-        flex-wrap: wrap;
-        font-size: .8rem;
-        padding: 5px 0;
-        margin: 0;
-        line-height: 24px;
+      #mag-glass {
+        height: 40px;
+        width: 40px;
+        padding: 0 10px;
+        filter: invert(1) brightness(.5);
+      }
+    }
+
+    .results {
+      position: absolute;
+      z-index: 99;
+      top: 8vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background-color: #000;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+      .tracks {
+        width: 100%;
+        max-width: 1024px;
+        overflow: auto;
+        transition: height .2s ease-in-out;
+        
+        .track {
+          display: flex;
+          margin-top: 5px;
+          line-height: 32px;
+          font-size: 1rem;
+          color: #ddd;
+          cursor: pointer;
+          border-radius: 3px;
+    
+          &:hover {
+            background-color: #111;
+          }
+    
+          &-album-image {
+            min-width: 64px;
+            background-repeat: no-repeat;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+          }
+    
+          &-info {
+            padding-left: 10px;
+            height: 100%;
+          }
+    
+          &-artist {
+            display: flex;
+            flex-wrap: wrap;
+            font-size: .8rem;
+            padding: 5px 0;
+            margin: 0;
+            line-height: 24px;
+          }
+        }
       }
     }
   }
@@ -159,13 +275,33 @@
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  
-  .App {
-    display: block;
+  #main-content {
+    flex-direction: column-reverse;
 
-    .songs, .app, .place {
+    .mockup-container {
+      height: 100vh;
+    }
+
+    .right {
+      width: 100%;
+    }
+
+    .mockup {
+      padding: 0;
       height: 100vh;
       width: 100vw;
+
+      .phone {
+        box-shadow: none;
+      }
+
+      &:before, &:after {
+        display: none;
+      }
     }
+  }
+
+  .mockup-container {
+    width: 100%;
   }
 }
