@@ -122,11 +122,11 @@
       border-radius: 48px;
       display: flex;
       flex-direction: column;
+      justify-content: center;
   
       .top {
-        position: relative;
-
         img {
+          display: block;
           width: 100%;
         }
       }
@@ -134,6 +134,9 @@
       .bottom {
         flex: 1;
         background-color: #333;
+        // box-shadow: 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+        box-shadow: 0 -1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
+        transition: background-color .5s ease-in-out;
 
         .controls {
           display: flex;
@@ -280,6 +283,7 @@
 
     .mockup-container {
       height: 100vh;
+      border: none;
     }
 
     .right {

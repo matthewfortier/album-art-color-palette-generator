@@ -4,8 +4,8 @@ class Swatches extends React.Component {
     render() {
 
         let swatches = [];
-        for (const value of this.props.palette) {
-            let backgroundColor = `rgba(${value[0]},${value[1]},${value[2]},${value[3]})`;
+        for (const value of this.props.palette.palette) {
+            let backgroundColor = `rgba(${value.centroid[0]},${value.centroid[1]},${value.centroid[2]},${value.centroid[3]})`;
             swatches.push(
                 <div className="color" key={backgroundColor} style={{ backgroundColor: backgroundColor }}></div>
             );

@@ -14,6 +14,11 @@ class Songs extends React.Component {
             song: {},
             image: {},
             marquee: false,
+            palette: {
+                palette: [],
+                ratios: {},
+                backColor: "#333"
+            }
         };
 
         this.worker = null;
@@ -87,6 +92,12 @@ class Songs extends React.Component {
             };
         }
 
+        if (props.palette && props.palette !== state.palette) {
+            return {
+                palette: props.palette,
+            };
+        }
+
         // Return null if the state hasn't changed
         return null;
     }
@@ -103,12 +114,11 @@ class Songs extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.song !== prevProps.song) {
-            if (this.props.song.image) {
-
-            }
-            // this.getTrackInfo();
-            // this.getBase64FromImageUrl(this.getAlbumImage(this.props.song.album, 0));
             this.getBase64FromImageUrl(this.props.song.album.images[2]["url"]);
+        }
+
+        if (this.props.palette !== prevProps.palette) {
+            this.setState({palette: this.props.palette})
         }
     }
 
@@ -122,7 +132,7 @@ class Songs extends React.Component {
                                 <img src={this.props.song.album.images[0]["url"]} alt="" />
                                 {/* <div className="content"></div> */}
                             </div>
-                            <div className="bottom">
+                            <div className="bottom" style={{ backgroundColor: this.state.palette.backColor }}> 
                                 <div className="text">
                                     <OverflowDetector
                                         onOverflowChange={this.handleOverflowChange}

@@ -13,7 +13,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       song: {},
-      palette: [],
+      palette: {
+        palette: [],
+        ratios: {}
+      },
       accessToken: new URLSearchParams(window.location.hash.substring(1)).get('access_token'),
       clientID: process.env.REACT_APP_CLIENT_ID
     }
@@ -54,7 +57,7 @@ class App extends React.Component {
             <Swatches palette={this.state.palette} />
           </div>
           <ScrollableAnchor id={'phone'}>
-            <Phone song={this.state.song} update={this.updatePalette} />
+            <Phone song={this.state.song} palette={this.state.palette} update={this.updatePalette} />
           </ScrollableAnchor>
         </div>
       </div>
