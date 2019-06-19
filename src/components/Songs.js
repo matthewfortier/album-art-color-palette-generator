@@ -74,26 +74,6 @@ class Songs extends React.Component {
     }
 
     searchSongs() {
-        /* let params = {
-            "method": "track.search",
-            "track": encodeURIComponent(this.state.searchkey),
-            "api_key": process.env.REACT_APP_API_KEY,
-            "format": "json",
-            "limit": 10
-        }
-
-        let queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        //console.log(LAST_FM_API + queryString);
-
-        fetch(constants.LAST_FM_API + queryString)
-            .then(response => response.json())
-            .then(data => {
-                if (data.hasOwnProperty('results')) {
-                    console.log(data.results.trackmatches.track);
-                    this.setState({ songs: data.results.trackmatches.track })
-                }
-            }); */
-
         // abort previous request, if any
         if (this.prev !== null) {
             this.prev.abort();
@@ -111,7 +91,6 @@ class Songs extends React.Component {
         return (
             <div className="songs">
                 <div className="search-bar">
-                    <img id="mag-glass" src="https://img.icons8.com/ios/50/000000/search.png" alt="Search Icon" />
                     <input type="text" placeholder="Search..." value={this.state.searchkey} onFocus={this.handleFocus} onKeyUp={this.handleKeyUp} onChange={this.handleChange} />
                 </div>
                 <div className="results">

@@ -4,7 +4,8 @@ import Marquee from '../components/Marquee';
 import ClusterWorker from '../workers/cluster.worker';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faStepBackward, faStepForward, faList, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 
 
 class Songs extends React.Component {
@@ -118,7 +119,7 @@ class Songs extends React.Component {
         }
 
         if (this.props.palette !== prevProps.palette) {
-            this.setState({palette: this.props.palette})
+            this.setState({ palette: this.props.palette })
         }
     }
 
@@ -128,15 +129,22 @@ class Songs extends React.Component {
                 <div className="mockup-container">
                     <div id="phone" className="mockup">
                         <div className="phone">
-                            <div className="top" /* style={{ 'backgroundImage': 'url("' + this.props.song.album.images[0]["url"] + '")' }} */>
+                            <div className="top">
                                 <img src={this.props.song.album.images[0]["url"]} alt="" />
-                                {/* <div className="content"></div> */}
                             </div>
-                            <div className="bottom" style={{ backgroundColor: this.state.palette.backColor }}> 
+                            <div className="bottom" style={{ backgroundColor: this.state.palette.backColor }}>
+                                <div className="time">
+                                    <span>{Math.floor(((this.props.song.duration_ms * 0.3) / 1000 / 60) << 0)}:{Math.floor(((this.props.song.duration_ms * 0.3) / 1000) % 60)}</span>
+                                    <div className="line">
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <span>{Math.floor((this.props.song.duration_ms / 1000 / 60) << 0)}:{Math.floor((this.props.song.duration_ms / 1000) % 60)}</span>
+                                </div>
                                 <div className="text">
                                     <OverflowDetector
                                         onOverflowChange={this.handleOverflowChange}
-                                        style={{ width: '75%', margin: '0 auto' }}
+                                        style={{ width: '75%', height: '30px', margin: '0 auto' }}
                                     >
                                         <span className="marquee" style={{ display: (this.state.marquee) ? "none" : "initial" }}>{this.props.song.name}</span>
                                         <marquee className="marquee" style={{ height: (this.state.marquee) ? "initial" : "0px" }}>{this.props.song.name}</marquee>
@@ -151,9 +159,21 @@ class Songs extends React.Component {
                                     }, '')}</span>
                                 </div>
                                 <div className="controls">
+                                    <FontAwesomeIcon icon={faThumbsDown} />
                                     <FontAwesomeIcon icon={faStepBackward} />
-                                    <FontAwesomeIcon icon={faPlay} />
+                                    <div id="play">
+                                        <FontAwesomeIcon icon={faPlay} />
+                                    </div>
                                     <FontAwesomeIcon icon={faStepForward} />
+                                    <FontAwesomeIcon icon={faThumbsUp} />
+                                </div>
+                                <div className="spacer"></div>
+                                <div className="next">
+                                    <div className="left">
+                                        <FontAwesomeIcon icon={faList} />
+                                        <span>Playlist</span>
+                                    </div>
+                                    <FontAwesomeIcon icon={faChevronUp} />
                                 </div>
                             </div>
                         </div>
