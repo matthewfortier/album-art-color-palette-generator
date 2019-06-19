@@ -147,7 +147,8 @@ class Songs extends React.Component {
                                         style={{ width: '75%', height: '30px', margin: '0 auto' }}
                                     >
                                         <span className="marquee" style={{ display: (this.state.marquee) ? "none" : "initial" }}>{this.props.song.name}</span>
-                                        <marquee className="marquee" style={{ height: (this.state.marquee) ? "initial" : "0px" }}>{this.props.song.name}</marquee>
+                                        <div className="shadow" style={{boxShadow: `inset 7px 0 9px -7px ${this.state.palette.backColor}, inset -7px 0 9px -7px ${this.state.palette.backColor}`}}></div>
+                                        <marquee className="marquee" style={{ height: (this.state.marquee) ? "initial" : "0px"}}>{this.props.song.name}</marquee>
                                     </OverflowDetector>
 
                                     <span className="artists">{this.props.song.artists.reduce((acc, val, i) => {
