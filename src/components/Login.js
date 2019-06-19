@@ -1,4 +1,5 @@
 import React from 'react';
+import { homepage } from '../../package.json';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Login extends React.Component {
     let params = {
       "client_id": this.props.clientID,
       "response_type": "token",
-      "redirect_uri": encodeURIComponent('http://localhost:3000/'),
+      "redirect_uri": (process.env.NODE_ENV === 'production') ? encodeURIComponent(homepage) : encodeURIComponent('http://localhost:3000/'),
     }
 
     let queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
