@@ -1,6 +1,5 @@
 import React from 'react';
 import { OverflowDetector } from 'react-overflow';
-import Marquee from '../components/Marquee';
 import ClusterWorker from '../workers/cluster.worker';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

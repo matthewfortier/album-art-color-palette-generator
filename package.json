@@ -8,6 +8,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.9.0",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "express": "^4.17.1",
     "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "ml-kmeans": "^4.2.1",
@@ -23,6 +24,7 @@
     "react-scrollable-anchor": "^0.6.1",
     "simplebar-react": "^1.0.0",
     "spotify-web-api-js": "^1.2.0",
+    "tiny-worker": "^2.2.0",
     "worker-loader": "^2.0.0"
   },
   "scripts": {
