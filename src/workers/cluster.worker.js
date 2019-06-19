@@ -1,19 +1,18 @@
 // const kmeans = require('ml-kmeans');
-importScripts('ml.min.js')
+importScripts('ml.min.js') // eslint-disable-line no-undef
 const _ = require('lodash');
 
 self.addEventListener("message", runCluster); // eslint-disable-line no-restricted-globals
 
 function runCluster(event) {
     // console.log(event.data, self) // eslint-disable-line no-restricted-globals
-    console.log(ML);
     let imageData = event.data;
     let pixels = [];
     for (var i = 0; i < imageData.length; i += 4) {
         pixels.push([imageData[i], imageData[i + 1], imageData[i + 2], imageData[i + 3]]);
     }
 
-    let ans = ML.KMeans.default(pixels, 20);
+    let ans = ML.KMeans.default(pixels, 20); // eslint-disable-line no-undef
 
     let centroids = ans.centroids;
     let palette = centroids.map(centroid => {
