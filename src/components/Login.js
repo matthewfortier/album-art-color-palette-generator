@@ -11,13 +11,18 @@ class Login extends React.Component {
 
   spotifyLogin() {
     let params = {
-      "client_id": this.props.clientID,
-      "response_type": "token",
-      "redirect_uri": (process.env.NODE_ENV === 'development') ? encodeURIComponent('http://localhost:3000/') : encodeURIComponent(homepage),
-    }
+      client_id: this.props.clientID,
+      response_type: 'token',
+      redirect_uri:
+        process.env.NODE_ENV === 'development'
+          ? encodeURIComponent('http://localhost:3000/')
+          : encodeURIComponent(homepage),
+    };
 
-    let queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-    let href = "https://accounts.spotify.com/authorize?" + queryString;
+    let queryString = Object.keys(params)
+      .map(key => key + '=' + params[key])
+      .join('&');
+    let href = 'https://accounts.spotify.com/authorize?' + queryString;
 
     window.location.href = href;
   }
@@ -26,11 +31,14 @@ class Login extends React.Component {
     return (
       <div className="Login">
         <h1>Hello!</h1>
-        <h4>To start generating color palettes from your favorite album art, login with Spotify below</h4>
-        <a onClick={this.spotifyLogin}>Login with Spotify</a>
+        <h4>
+          To start generating color palettes from your favorite album art, login
+          with Spotify below
+        </h4>
+        <button onClick={this.spotifyLogin}>Login with Spotify</button>
       </div>
     );
   }
 }
 
-export default Login
+export default Login;

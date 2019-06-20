@@ -1,21 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap');
 
 @font-face {
-  font-family: "Calibre";
-  src: url("./assets/fonts/calibre-regular.ttf") format("truetype"),
+  font-family: 'Calibre';
+  src: url('./assets/fonts/calibre-regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Calibre SemiBold";
-  src: url("./assets/fonts/calibre-semibold.ttf") format("truetype"),
+  font-family: 'Calibre SemiBold';
+  src: url('./assets/fonts/calibre-semibold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Cirular";
-  src: url("./assets/fonts/circular-medium.ttf") format("truetype"),
+  font-family: 'Cirular';
+  src: url('./assets/fonts/circular-medium.ttf') format('truetype');
 }
 
-.html, body {
+.html,
+body {
   margin: 0;
   padding: 0;
   background-color: #292a2e;
@@ -39,16 +40,21 @@
     margin: 5px 0;
   }
 
-  a {
-    background-color: #1DB954;
+  button {
+    background-color: #1db954;
     padding: 10px 30px;
     border-radius: 20px;
     text-transform: uppercase;
     font-weight: bold;
     cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    outline: none;
 
-    &:hover, &:active {
-      background-color: lighten(#1DB954, 10);
+    &:hover,
+    &:active {
+      background-color: lighten(#1db954, 10);
     }
   }
 }
@@ -114,31 +120,32 @@
       border-radius: 60px;
       background-color: #333;
     }
-  
+
     .phone {
       height: 100%;
       width: 100%;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
       border-radius: 48px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-  
+
       .top {
         img {
           display: block;
           width: 100%;
         }
       }
-  
+
       .bottom {
         flex: 1;
         display: flex;
         flex-direction: column;
         background-color: #333;
         // box-shadow: 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
-        box-shadow: 0 -1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
-        transition: background-color .5s ease-in-out;
+        box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.12),
+          0 -1px 2px rgba(0, 0, 0, 0.24);
+        transition: background-color 0.5s ease-in-out;
 
         .spacer {
           flex: 1;
@@ -147,7 +154,7 @@
         .next {
           flex: 1;
           min-height: 40px;
-          background-color: rgba(0,0,0,.2);
+          background-color: rgba(0, 0, 0, 0.2);
           color: white;
           display: flex;
           justify-content: space-between;
@@ -168,18 +175,18 @@
           color: white;
           padding: 0 20px;
           margin-top: 20px;
-          font-size: .75rem;
+          font-size: 0.75rem;
 
           .line {
             width: 100%;
             padding: 0 10px;
             position: relative;
 
-            span{
+            span {
               display: block;
               width: 100%;
               height: 2px;
-              background-color: rgba(255,255,255,.5);
+              background-color: rgba(255, 255, 255, 0.5);
 
               &:nth-child(2) {
                 position: absolute;
@@ -237,7 +244,7 @@
             height: 100%;
             width: 100%;
             z-index: 1;
-            transition: box-shadow .5s ease-in-out;
+            transition: box-shadow 0.5s ease-in-out;
           }
 
           .marquee {
@@ -249,13 +256,11 @@
 
           span {
             text-align: center;
-            color: rgba(255,255,255,.7);
+            color: rgba(255, 255, 255, 0.7);
           }
         }
       }
     }
-  
-    
   }
 }
 
@@ -293,7 +298,7 @@
         height: 40px;
         width: 40px;
         padding: 0 10px;
-        filter: invert(1) brightness(.5);
+        filter: invert(1) brightness(0.5);
       }
     }
 
@@ -305,14 +310,14 @@
       display: flex;
       justify-content: center;
       background-color: #000;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
       .tracks {
         width: 100%;
         max-width: 1024px;
         overflow: auto;
-        transition: height .2s ease-in-out;
-        
+        transition: height 0.2s ease-in-out;
+
         .track {
           display: flex;
           margin-top: 5px;
@@ -321,27 +326,27 @@
           color: #ddd;
           cursor: pointer;
           border-radius: 3px;
-    
+
           &:hover {
             background-color: #111;
           }
-    
+
           &-album-image {
             min-width: 64px;
             background-repeat: no-repeat;
             border-top-left-radius: 3px;
             border-bottom-left-radius: 3px;
           }
-    
+
           &-info {
             padding-left: 10px;
             height: 100%;
           }
-    
+
           &-artist {
             display: flex;
             flex-wrap: wrap;
-            font-size: .8rem;
+            font-size: 0.8rem;
             padding: 5px 0;
             margin: 0;
             line-height: 24px;
@@ -384,7 +389,8 @@
         box-shadow: none;
       }
 
-      &:before, &:after {
+      &:before,
+      &:after {
         display: none;
       }
     }

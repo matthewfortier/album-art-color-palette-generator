@@ -5,7 +5,7 @@ import Phone from './components/Phone';
 import Swatches from './components/Swatches';
 import Login from './components/Login';
 
-import ScrollableAnchor from 'react-scrollable-anchor'
+import ScrollableAnchor from 'react-scrollable-anchor';
 import './App.scss';
 
 class App extends React.Component {
@@ -15,11 +15,13 @@ class App extends React.Component {
       song: {},
       palette: {
         palette: [],
-        ratios: {}
+        ratios: {},
       },
-      accessToken: new URLSearchParams(window.location.hash.substring(1)).get('access_token'),
-      clientID: process.env.REACT_APP_CLIENT_ID
-    }
+      accessToken: new URLSearchParams(window.location.hash.substring(1)).get(
+        'access_token'
+      ),
+      clientID: process.env.REACT_APP_CLIENT_ID,
+    };
 
     this.updateSong = this.updateSong.bind(this);
     this.updatePalette = this.updatePalette.bind(this);
@@ -42,22 +44,28 @@ class App extends React.Component {
 
   render() {
     if (this.state.accessToken === null) {
-      return (
-        <Login clientID={this.state.clientID} />
-      )
+      return <Login clientID={this.state.clientID} />;
     }
 
     return (
       <div className="App">
         <div id="search">
-          <Songs update={this.updateSong} clientID={this.state.clientID} accessToken={this.state.accessToken} />
+          <Songs
+            update={this.updateSong}
+            clientID={this.state.clientID}
+            accessToken={this.state.accessToken}
+          />
         </div>
         <div id="main-content">
           <div className="right">
             <Swatches palette={this.state.palette} />
           </div>
           <ScrollableAnchor id={'phone'}>
-            <Phone song={this.state.song} palette={this.state.palette} update={this.updatePalette} />
+            <Phone
+              song={this.state.song}
+              palette={this.state.palette}
+              update={this.updatePalette}
+            />
           </ScrollableAnchor>
         </div>
       </div>
