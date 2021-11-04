@@ -183,9 +183,6 @@ class Songs extends React.Component {
                   >
                     <span
                       className="marquee"
-                      style={{
-                        display: this.state.marquee ? 'none' : 'initial',
-                      }}
                     >
                       {this.props.song.name}
                     </span>
@@ -193,12 +190,6 @@ class Songs extends React.Component {
                       className="shadow"
                       style={{ boxShadow: this.getColorBoxShadow() }}
                     ></div>
-                    <marquee
-                      className="marquee"
-                      style={{ height: this.state.marquee ? 'initial' : '0px' }}
-                    >
-                      {this.props.song.name}
-                    </marquee>
                   </OverflowDetector>
 
                   <span className="artists">{this.renderArtists()}</span>
